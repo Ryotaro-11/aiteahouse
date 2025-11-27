@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEAHOUSE — 3D Scans</title>
+    <title>Reinterpreting TEAHOUSE UTSUSHI with Artificial Intelligence</title>
     <style>
         * {
             margin: 0;
@@ -11,171 +11,130 @@
             box-sizing: border-box;
         }
         
-        html {
-            overflow-y: auto;
-        }
-        
         body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            min-height: 100vh;
-            padding: 60px 20px;
-            position: relative;
-        }
-        
-        /* Animated computational grid */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.04) 49px, rgba(255,255,255,0.04) 50px),
-                repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.04) 49px, rgba(255,255,255,0.04) 50px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(50px, 50px);
-            }
-        }
-        
-        /* Floating light particles */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-            animation: particleFloat 12s ease-in-out infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        @keyframes particleFloat {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(20px, -20px) scale(1.05);
-            }
+            font-family: 'Helvetica Neue', 'Arial Black', 'Arial', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.5;
+            padding: 0;
         }
         
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
+            padding: 60px 40px;
         }
         
         .header {
-            text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 80px;
+            border-bottom: 3px solid #000000;
+            padding-bottom: 40px;
         }
         
         .header h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: #ffffff;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 4em;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
         }
         
-        .header .subtitle {
-            font-size: 0.95em;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 0.05em;
+        .project-description {
+            font-size: 1em;
+            font-weight: 400;
+            line-height: 1.8;
+            max-width: 900px;
         }
         
         .links {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 60px;
+            gap: 0;
+            border-top: 1px solid #000000;
+        }
+        
+        .link-item {
+            border-bottom: 1px solid #000000;
+            transition: background-color 0.2s ease;
+        }
+        
+        .link-item:hover {
+            background-color: #000000;
+        }
+        
+        .link-item:hover a {
+            color: #ffffff;
         }
         
         .link-button {
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            border-radius: 18px;
-            padding: 24px 30px;
+            display: block;
+            padding: 30px 0;
             text-decoration: none;
             color: #000000;
-            font-size: 1.1em;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-        }
-        
-        /* Colorful scan line effect */
-        .link-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(102, 126, 234, 0.2), 
-                rgba(240, 147, 251, 0.2), 
-                transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .link-button:hover::before {
-            left: 100%;
+            font-size: 2.5em;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
         }
         
         .link-button:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            color: #ffffff;
         }
         
-        .link-button:active {
-            transform: translateY(-2px);
+        .footer {
+            margin-top: 100px;
+            padding-top: 40px;
+            border-top: 3px solid #000000;
         }
         
-        @media (max-width: 480px) {
-            body {
+        .footer p {
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
                 padding: 40px 20px;
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 2.5em;
             }
             
             .header {
-                margin-bottom: 40px;
+                margin-bottom: 50px;
+                padding-bottom: 30px;
+            }
+            
+            .project-description {
+                font-size: 0.9em;
             }
             
             .link-button {
-                padding: 20px 24px;
-                font-size: 1em;
+                font-size: 1.8em;
+                padding: 20px 0;
+            }
+            
+            .footer {
+                margin-top: 60px;
+                padding-top: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .link-button {
+                font-size: 1.4em;
             }
         }
     </style>
@@ -183,42 +142,64 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>TEAHOUSE</h1>
-            <div class="subtitle">3D Scan Collection</div>
+            <h1>Reinterpreting<br>TEAHOUSE UTSUSHI<br>with Artificial<br>Intelligence</h1>
+            <p class="project-description">
+                This project reinterprets the traditional Japanese tea house "utsushi" (copying) culture through AI-generated architecture, using ThinkDiffusion to generate elevations trained on Kyoto tea houses while maintaining the structural framework of Konnichian's "okoshi-ezu" (development drawing). The generated tea house will be actually constructed at a university festival, with materials determined through collages created using Gemini's nanobanana to apply contemporary affordable materials to the elevations.
+            </p>
         </div>
         
         <div class="links">
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990327276536856576?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY0 12:58
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990327276536856576?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 0 — 12:58
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990327959491182592?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 08:57
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990327959491182592?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 08:57
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328496508895232?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 09:32
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328496508895232?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 09:32
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328855960748032?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 10:44
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328855960748032?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 10:44
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990321590381838336?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 12:27
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990321590381838336?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 12:27
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328855960748032?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 14:10
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990328855960748032?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 14:10
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990112772280549376?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY1 15:17
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990112772280549376?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 1 — 15:17
+                </a>
+            </div>
             
-            <a href="https://www.kiriengine.app/share/3dgsEmbed/1990113442811346944?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
-                DAY2 13:31
-            </a>
+            <div class="link-item">
+                <a href="https://www.kiriengine.app/share/3dgsEmbed/1990113442811346944?userId=1365302&type=0&bg_theme=bright&auto_spin=1" class="link-button" target="_blank">
+                    DAY 2 — 13:31
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Kiri Engine — 3D Gaussian Splatting</p>
         </div>
     </div>
 </body>
